@@ -1,0 +1,5 @@
+name = Anatomy
+description = "Visualize Site structure"
+package = Statistics
+core = 7.x
+
