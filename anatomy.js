@@ -18,11 +18,39 @@ Drupal.behaviors.anatomy = {
     var options = {
       width:  '100%',
       height: '600px',
-      edges: {
-        // color: 'red',
-        width: 2
-      },
       smoothCurves: false,
+      stabilize: false,
+
+      nodes: {
+        radiusMin: 16,
+        radiusMax: 32,
+        fontColor: 'BLACK'
+      },
+
+      edges: {
+        color: 'GRAY'
+      },
+
+      physics: {
+          barnesHut: {
+              enabled: true,
+              gravitationalConstant: -2000,
+              centralGravity: 0.1,
+              springLength: 95,
+              springConstant: 0.04,
+              damping: 0.09
+          },
+          repulsion: {
+              centralGravity: 0.1,
+              springLength: 50,
+              springConstant: 0.05,
+              nodeDistance: 100,
+              damping: 0.09
+          },
+      }
+
+
+
     };
 
     var timeline = new vis.Graph(container, data, options);

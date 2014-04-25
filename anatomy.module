@@ -53,8 +53,6 @@ function anatomy_page(){
       ),
   );
 
-  dpm($settings['entity_types']);
-
   // NODES
   $all_entities = entity_get_info();
   $vis_nodes = array();
@@ -76,7 +74,6 @@ function anatomy_page(){
 
   foreach (field_info_fields() as $field_name => $field) {
     if($field['type'] === 'entityreference') {
-
       foreach ($field['bundles'] as $bundle) {
         foreach ($bundle as $key => $type) {
           foreach ($field['settings']['handler_settings']['target_bundles'] as $target_bundle) {
@@ -84,7 +81,8 @@ function anatomy_page(){
               'from' => $type,
               'to' => $target_bundle,
               'style' => 'arrow',
-              'dash' => TRUE,
+              'label' => $field_name,
+              'length' => 300,
             );
           }
         }
