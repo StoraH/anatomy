@@ -9,6 +9,8 @@ function anatomy_menu() {
     'page callback' => 'anatomy_page',
     'access arguments' => array('access anatomy'),
     'type' => MENU_NORMAL_ITEM,
+    'file' => 'anatomy.inc',     // don't forget to add the file and path
+    'file path' => drupal_get_path('module', 'anatomy'),
   );
   return $items;
 }
@@ -31,69 +33,10 @@ function anatomy_permission() {
 function anatomy_theme() {
   return array(
     'anatomy' => array(
+      'variables' => array(
+        'data' => NULL,
+      ),
       'template' => 'anatomy',
     ),
   );
 }
-
-function anatomy_page(){
-  // Some Vis.js stuff  - http://visjs.org/
-  drupal_add_css(drupal_get_path('module', 'anatomy') . '/vis.css');
-  drupal_add_js(drupal_get_path('module', 'anatomy') . '/vis.js', 'file');
-  drupal_add_js(drupal_get_path('module', 'anatomy') . '/anatomy.js', 'file');
-
-  $settings['entity_types'] = array (
-    'node' => array(
-      'shape' => 'box',
-      'group' => 'node',
-      ),
-    'taxonomy_term' => array(
-      'shape' => 'circle',
-      'group' => 'taxonomy_term',
-      ),
-  );
-
-  // NODES
-  $all_entities = entity_get_info();
-  $vis_nodes = array();
-
-  foreach ($settings['entity_types'] as $key => $settings) {
-    foreach ($all_entities[$key]['bundles'] as $id => $entity_type) {
-      $vis_nodes[] = array(
-        'id' => $id,
-        'label' => $entity_type['label'],
-        'group' =>$settings['group'],
-        'shape' => $settings['shape'],
-      );
-    }
-  }
-
-
-  // EDGES
-  $vis_edges = array();
-
-  foreach (field_info_fields() as $field_name => $field) {
-    if($field['type'] === 'entityreference') {
-      foreach ($field['bundles'] as $bundle) {
-        foreach ($bundle as $key => $type) {
-          foreach ($field['settings']['handler_settings']['target_bundles'] as $target_bundle) {
-           $vis_edges[] = array(
-              'from' => $type,
-              'to' => $target_bundle,
-              'style' => 'arrow',
-              'label' => $field_name,
-              'length' => 300,
-            );
-          }
-        }
-      }
-    }
-  }
-
-
-  drupal_add_js(array('anatomy' => array('nodes' => $vis_nodes, 'edges' => $vis_edges)), 'setting');
-
-
-  return theme('anatomy');
-}
-

@@ -1,0 +1,28 @@
+/* INPUT */
+.Anatomy-input {
+  width: 300px;
+  height: 200px;
+  border: 1px solid;
+  display: block;
+}
+
+/* GRAPH */
+.Anatomy-graph {
+  overflow: hidden;
+}
+
+.Anatomy-graph .node rect {
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: #fff;
+}
+
+.Anatomy-graph .edgeLabel rect {
+  fill: #fff;
+}
+
+.Anatomy-graph .edgePath {
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: none;
+}
